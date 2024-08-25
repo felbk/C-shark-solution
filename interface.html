@@ -3,20 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        img{
+            width: 100%;
+            
+        }
+        body {
+            max-width: 650px;
+            margin: auto;
+            background-color: rgba(242,243,245,255);
+            
+        }
+        .widget {
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 92%;
+            margin: auto;
+            background-color: white;
+            border-radius: 4%;
+        }
+        .widget p {
+            font-size: large;
+            color:grey;
+            font-weight: 200;
+            margin-left: 6%;
+            padding-top: 10px;
+        }
+        .grafico {
+            
+            
+        }
+    </style>
     <title>Stone</title>
 </head>
 <body>
     <!--Parte header + widgets superiores do app da stone-->
     <header>
-
+        <img src="appTop.jpeg" alt="">
     </header>
-    <!--Parte a ser implementada-->
-    <section>
 
+    <!--Parte a ser implementada-->
+    <section class="widget">
+        <p>Suas vendas</p>
+        <figure class="grafico">
+            <img src="GraficoSemanal.png" alt="">
+        </figure>
     </section>
+
     <!--Parte inferior do app da stone-->
     <footer>
-
+        <img src="appBottom.jpeg" alt="">
     </footer>
 
 </body>
