@@ -13,10 +13,10 @@ gerarGraficos("static\images\GraficoSemanal.png",x,y)
 subset = pd.DataFrame(get_subset_empresa(document_id=document_id))
 #gera cupons
 cupons = {}
-for i , notnone in enumerate(subset["card_number"]!=None):
-    if notnone:
-        client_id = subset["card_number"].iloc[i,:]
-        cupons[client_id]=gera_cupom(document_id,client_id)
+clients= [ "1000164842220266112",'1000184940349350528','1000216457854768000','1000297234729290496','999604941954856320','999681003681560704','999688527568146048','999979815675401344','8570859491088080896']
+for client_id in clients:
+    client_id = str(client_id)
+    cupons[client_id]=gera_cupom(document_id,client_id)
 print (cupons)
 
 
