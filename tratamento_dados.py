@@ -66,7 +66,7 @@ def preve_valor(document_id, client_id):
     
     # DataFrame para previsão
     df_predict = pd.DataFrame({
-        'date_time': ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo']
+        'date_time': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     })
     
     # Pré-processamento para previsão
