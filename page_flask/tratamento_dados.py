@@ -29,6 +29,27 @@ translate = {
     "Sunday": "Domingo"
 }
 
+def get_subset_empresa(document_id):
+    data = {
+        'bank': "1dzL_SWBkBs5xrUxuGQTm04oe3USgkL9u",    # banking data
+        'sales': "1QK-VgSU3AxXUw330KjYFUj8S9hzKJsG6",   # sales data
+        'mcc': "1JN0bR84sgZ_o4wjKPBUmz45NeEEkVgt7",     # mcc description
+    }
+
+    # Download all files from Google Drive
+    """for name, file_id in data.items():
+        gdown.download(f'https://drive.google.com/uc?id={file_id}', name + '.parquet', quiet=False)"""
+
+    # Read all files and store on a dictionary of pandas dataframes
+    df = {}
+    for name in data.keys():
+        df[name] = pd.read_parquet(name + '.parquet')
+
+    #Cria um subset com as vendas realizadas pelo mesmo 'document_id'
+    sales = df['sales']
+    subset_empresa = sales[sales['document_id'].astype('str').str.contains(document_id)] 
+    return subset_empresa
+
 #Função para calcular o valor total por dia da semana
 def calcula_total(document_id):
     data = {
@@ -143,7 +164,9 @@ def preve_valor(document_id, client_id):
 
 
 #Função para gerar cupom
-def gera_cupom(df_pred):
+def gera_cupom(document_id, client_id
+):
+    df_pred = preve_valor(document_id,client_id)
     df_pred = pd.DataFrame(df_pred)
     #Dia com menor ticket médio = dia para usar cupom
     day = df_pred["date_time"][df_pred["value_previsto"].idxmin()]
@@ -184,12 +207,16 @@ def gera_cupom(df_pred):
     Mean = df_pred["value_previsto"].min()
     UpMean = df_predict["UpMean"][df_predict["Used_Previsto"].idxmax()]
     OffPrice = df_predict["OffPrice"][df_predict["Used_Previsto"].idxmax()]
-    Cupom = f"Cupom de R${(Mean*(1+UpMean)*OffPrice):.2f} em compras acima de R${(Mean*(1+UpMean)):.2f} para usar {translate[day]}!"
+    desconto = (Mean*(1+UpMean)*OffPrice)
+    valorMin = (Mean*(1+UpMean))
+    dia = translate[day]
+    cupomText = f"Cupom de R${desconto:.2f} em compras acima de R${valorMin:.2f} para usar {dia}!"
+    cupom = dict(dia=dia,desconto=desconto,valorMin=valorMin,cupomText=cupomText)
     # Exibir resultados
     #print(df_predict)
 
-    return Cupom
+    return cupom
     
 
 #print(calcula_total(document_id))
-#print(gera_cupom(preve_valor(document_id, client_id)))
+#print(gera_cupom(document_id, client_id))
