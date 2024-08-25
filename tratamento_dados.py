@@ -36,7 +36,10 @@ def trata_dados(document_id, client_id):
     subset_cliente.loc[:,"date_time"] = subset_cliente['date_time'].apply(weekday_conv)
     print(subset_cliente)
 
-    return subset_cliente
+    #Filtra apenas as colunas 'date_time' e 'value'
+    subset = subset_cliente[['date_time', 'value']]
+
+    return subset
 
 def preve_valor(document_id, client_id):
 
@@ -45,7 +48,7 @@ def preve_valor(document_id, client_id):
     
     dados = {
         'date_time': ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'],
-        'valor': [200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10, 200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10, 200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10, 200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10]
+        'value': [200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10, 200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10, 200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10, 200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10]
     }
     '''
     dados = trata_dados(document_id, client_id)   
@@ -54,8 +57,8 @@ def preve_valor(document_id, client_id):
     
     # Pré-processamento
     df_encoded = pd.get_dummies(df, columns=['date_time'], drop_first=True)
-    x = df_encoded.drop(columns=['valor'])
-    y = df_encoded['valor']
+    x = df_encoded.drop(columns=['value'])
+    y = df_encoded['value']
     
     # Treinamento do modelo
     rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
@@ -71,7 +74,7 @@ def preve_valor(document_id, client_id):
     df_predict_encoded = df_predict_encoded.reindex(columns=x.columns, fill_value=0)
     
     # Previsões
-    df_predict['valor_previsto'] = rf_model.predict(df_predict_encoded)
+    df_predict['value_previsto'] = rf_model.predict(df_predict_encoded)
     
     # Exibir resultados
     return df_predict
