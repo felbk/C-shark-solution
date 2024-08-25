@@ -38,12 +38,14 @@ def trata_dados():
 
     def weekday_conv(var):
         return var.strftime('%A')
-
-    subset_cliente['date_time'] = subset_cliente['date_time'].apply(weekday_conv)
+    print(subset_cliente)
+    subset_cliente.loc[:,"date_time"] = subset_cliente['date_time'].apply(weekday_conv)
+    print(subset_cliente)
 
     #Filtra as colunas para o algoritmo de aprendizagem
 
     subset = subset_cliente.groupby('date_time')['value'].agg('mean')
+    return 
 
 
 def preve_valor():
