@@ -45,12 +45,12 @@ def trata_dados(document_id, client_id):
 #Data base para treino do gerador de cupom
 
 
-Cupons = {'UpMean': [0.5,0.8,1],
+Cupons = {'UpMean': [0.5,0.8,1,0.2,0.6,1.5,0.2,0.1,0.3,0.05,0.01,0.02],
            
-'OffPrice': [0.2,0.1,0.3],
-"Day" : ["Sunday","Saturday","Monday"],
+'OffPrice': [0.2,0.1,0.3,0.05,0.01,0.02,0.2,0.1,0.3,0.05,0.01,0.02],
+"Day" : ["Sunday","Saturday","Monday","Tuesday","Thursday","Friday","Sunday","Saturday","Monday","Tuesday","Thursday","Friday"],
 
- 'Used': [True,False,True]}
+ 'Used': [True,False,True,True,False,False,True,False,True,True,False,False]}
 
 Cupons = pd.DataFrame(Cupons)
 
@@ -117,8 +117,8 @@ def gera_cupom(df_pred):
     }
     for i in range(200):
         test['Day'].append(day)
-        test["UpMean"].append(random.randint(1,100)/100)
-        test["OffPrice"].append(random.randint(1,50)/100)
+        test["UpMean"].append(random.randint(30,150)/100)
+        test["OffPrice"].append(random.randint(1,35)/100)
     
     test = pd.DataFrame(test)
 
