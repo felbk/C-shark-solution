@@ -70,3 +70,14 @@ button section{
     margin:auto;
     
 }
+.popup {
+    display: none;
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 92%;
+    margin: auto;
+    background-color: white;
+    border-radius: 4%;
+    padding-top: 20px;
+    margin-top: 15px;
+
+}
