@@ -30,6 +30,45 @@ translate = {
 }
 
 
+#Função para calcular o valor total por dia da semana
+
+def calcula_total(document_id):
+
+    data = {
+        'bank': "1dzL_SWBkBs5xrUxuGQTm04oe3USgkL9u",    # banking data
+        'sales': "1QK-VgSU3AxXUw330KjYFUj8S9hzKJsG6",   # sales data
+        'mcc': "1JN0bR84sgZ_o4wjKPBUmz45NeEEkVgt7",     # mcc description
+    }
+
+    # Download all files from Google Drive
+    for name, file_id in data.items():
+        gdown.download(f'https://drive.google.com/uc?id={file_id}', name + '.parquet', quiet=False)
+
+    # Read all files and store on a dictionary of pandas dataframes
+    df = {}
+    for name in data.keys():
+        df[name] = pd.read_parquet(name + '.parquet')
+
+    #Cria um subset com as vendas realizadas pelo mesmo 'document_id'
+
+    sales = df['sales']
+    subset_empresa = sales[sales['document_id'].astype('str').str.contains(document_id)] 
+
+    #Altera a coluna date_time para weekdays
+
+    def weekday_conv(var):
+        return var.strftime('%A')
+    
+    #Converte o data type da coluna date_time para string
+    
+    subset_empresa.loc[:,"date_time"] = subset_empresa['date_time'].astype(str)
+    subset_empresa.loc[:,"date_time"] = subset_empresa['date_time'].apply(weekday_conv) 
+
+    ticket_total = subset_empresa.groupby('date_time')['value'].agg(['sum'])
+
+    return ticket_total
+
+
 #Função para tratamento de dados para o algoritmo de Random Forest
 def trata_dados(document_id, client_id):
 
