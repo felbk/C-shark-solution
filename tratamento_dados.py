@@ -100,7 +100,19 @@ def gera_cupom(df_pred):
     #Dia com menor ticket médio = dia para usar cupom
     day = df_pred["date_time"][df_pred["value_previsto"].idxmin()]
 
-    #Gerar UpMean e Offprice aleatorio e testar para ver se o cliente usaria com base no dict Cupons
+    #Gerar opções de UpMean e Offprice aleatorias e testar para ver se o cliente usaria com base no dict Cupons
+    test = {
+        "UpMean":[],
+        "OffPrice":[],
+        "Day":[]
+    }
+    for i in range(20):
+        test['Day'].append(day)
+        test["UpMean"].append(random.randint(1,100)/100)
+        test["OffPrice"].append(random.randint(1,50)/100)
+    
+
+    
 
 
 document_id = "453832840298988785"
