@@ -1,14 +1,8 @@
 import gdown
 import pandas as pd
-from sklearn.model_selection import train_test_split
-#from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
-#from sklearn import tree
-import pandas as pd
-#import matplotlib.pyplot as plt
 
-def trata_dados():
+def trata_dados(document_id, client_id):
 
     data = {
         'bank': "1dzL_SWBkBs5xrUxuGQTm04oe3USgkL9u",    # banking data
@@ -28,11 +22,11 @@ def trata_dados():
     #Cria um subset com as vendas realizadas pelo mesmo 'document_id'
 
     sales = df['sales']
-    subset_empresa = sales[sales['document_id'].astype('str').str.contains("453832840298988785")] 
+    subset_empresa = sales[sales['document_id'].astype('str').str.contains(document_id)] 
 
     #Cria um subset com as vendas realizadas para um mesmo cliente ('card_number')
 
-    subset_cliente = subset_empresa[subset_empresa['card_number'].astype('str').str.contains("8570859491088080896")]
+    subset_cliente = subset_empresa[subset_empresa['card_number'].astype('str').str.contains(client_id)]
 
     #Altera a coluna date_time para weekdays
 
@@ -42,44 +36,48 @@ def trata_dados():
     subset_cliente.loc[:,"date_time"] = subset_cliente['date_time'].apply(weekday_conv)
     print(subset_cliente)
 
-    #Filtra as colunas para o algoritmo de aprendizagem
+    return subset_cliente
 
-    subset = subset_cliente.groupby('date_time')['value'].agg('mean')
-    return 
+def preve_valor(document_id, client_id):
 
-
-def preve_valor():
-
-    dados = trata_dados()
-    return dados
-'''
+    '''
+    Dataset de teste usado durante o desenvolvimento // Remover ao término do projeto
+    
+    dados = {
+        'date_time': ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'],
+        'valor': [200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10, 200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10, 200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10, 200, 100, 300, 150, 100, 200, 100, 300, 150, 100, 120, 200, 100, 300, 150, 100, 120, 10]
+    }
+    '''
+    dados = trata_dados(document_id, client_id)   
+    
     df = pd.DataFrame(dados)
+    
+    # Pré-processamento
+    df_encoded = pd.get_dummies(df, columns=['date_time'], drop_first=True)
+    x = df_encoded.drop(columns=['valor'])
+    y = df_encoded['valor']
+    
+    # Treinamento do modelo
+    rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
+    rf_model.fit(x, y)
+    
+    # DataFrame para previsão
+    df_predict = pd.DataFrame({
+        'date_time': ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo']
+    })
+    
+    # Pré-processamento para previsão
+    df_predict_encoded = pd.get_dummies(df_predict, columns=['date_time'], drop_first=True)
+    df_predict_encoded = df_predict_encoded.reindex(columns=x.columns, fill_value=0)
+    
+    # Previsões
+    df_predict['valor_previsto'] = rf_model.predict(df_predict_encoded)
+    
+    # Exibir resultados
+    return df_predict
 
-    # Converter os dias da semana para variáveis numéricas
-    df['date_time'] = df['date_time'].astype('category').cat.codes
 
-    x = df[['date_time']]
-    y = df['valor']
-
-    # Passo 2: Dividir os Dados em Treinamento e Teste
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.5, random_state=42)
-
-    # Passo 3: Treinar o Modelo
-    model = RandomForestRegressor(n_estimators=100, random_state=42)
-    model.fit(x_train, y_train)
-
-    # Passo 4: Fazer Previsões
-    y_pred = model.predict(x_test)
-
-    # Avaliar o Modelo
-    mse = mean_squared_error(y_test, y_pred)
-    print(f"Erro Quadrático Médio: {mse}")
-
-    # Prever os valores para todos os dias da semana
-    valores_previstos = model.predict(x)
-    df['Valor_Previsto'] = valores_previstos
-
-    return df
-'''
-print(preve_valor())
+document_id = "453832840298988785"
+client_id = "8570859491088080896"
+print(preve_valor(document_id, client_id))
 
