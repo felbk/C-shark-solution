@@ -54,6 +54,7 @@ Cupons = {'UpMean': [0.83, 0.52, 0.26, 0.53, 0.26, 0.05, 0.27, 0.76, 0.43, 0.39,
 False, False, True, True, False, True, False, True, True, True, False, True, True, True, False, False, True, False, True, False, True, False, False, True, True, True, True, False, True, True, True, False, False, True, True, False, True, True, False, True, False, False, True, True, False, False, False, False, True, True, False, False, False, False, False, False, False, False, False, False, True, False, True, False, False, False, True, False, True, False, True, True, False, False, True, True, True, True, False, True, False, True, 
 False, False, True, True, False, False, False, True, True, True, True, False, False, False]}
 
+Cupons = pd.DataFrame(Cupons)
 
 def preve_valor(document_id, client_id):
 
@@ -94,6 +95,16 @@ def preve_valor(document_id, client_id):
     # Exibir resultados
     return df_predict
 
+translate = {
+    "Monday": "Segunda-feira",
+    "Tuesday": "Terça-feira",
+    "Wednesday": "Quarta-feira",
+    "Thursday": "Quinta-feira",
+    "Friday": "Sexta-feira",
+    "Saturday": "Sábado",
+    "Sunday": "Domingo"
+}
+
 #Função para gerar cupom
 def gera_cupom(df_pred):
     df_pred = pd.DataFrame(df_pred)
@@ -106,16 +117,46 @@ def gera_cupom(df_pred):
         "OffPrice":[],
         "Day":[]
     }
-    for i in range(20):
+    for i in range(200):
         test['Day'].append(day)
         test["UpMean"].append(random.randint(1,100)/100)
         test["OffPrice"].append(random.randint(1,50)/100)
     
+    test = pd.DataFrame(test)
 
+    
+    # Pré-processamento
+    df_encoded = pd.get_dummies(Cupons, columns=['Day'], drop_first=False)
+    df_encoded.loc[:,['UpMean',"OffPrice"]] = Cupons[["UpMean","OffPrice"]]
+    x = df_encoded.drop(columns=['Used'])
+    y = df_encoded['Used']
+    
+    # Treinamento do modelo
+    rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
+    rf_model.fit(x, y)
+    
+    # DataFrame para previsão
+    df_predict = test
+    
+    # Pré-processamento para previsão
+    df_predict_encoded = pd.get_dummies(df_predict, columns=['Day'], drop_first=False)
+    df_predict_encoded = df_predict_encoded.reindex(columns=x.columns, fill_value=0)
+    
+    # Previsões
+    df_predict['Used_Previsto'] = rf_model.predict(df_predict_encoded)
+    
+    Mean = df_pred["value_previsto"].min()
+    UpMean = df_predict["UpMean"][df_predict["Used_Previsto"].idxmax()]
+    OffPrice = df_predict["OffPrice"][df_predict["Used_Previsto"].idxmax()]
+    Cupom = f"Cupom de R${(Mean*(1+UpMean)*OffPrice):.2f} em compras acima de R${(Mean*(1+UpMean)):.2f} para usar {translate[day]}!"
+    # Exibir resultados
+    print(df_predict)
+    
+    return Cupom
     
 
 
 document_id = "453832840298988785"
 client_id = "8570859491088080896"
-print(preve_valor(document_id, client_id))
+print(gera_cupom(preve_valor(document_id, client_id)))
 
