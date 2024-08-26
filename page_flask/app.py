@@ -19,6 +19,7 @@ clients= ["8570859491088080896","3937011235745296896","4968104925029793792","405
 for client_id in clients:
     cupons[client_id]=gera_cupom(document_id,client_id)
 print (cupons)
+print(f"foram gerado {len(cupons)} cupons")
 
 
 app = Flask(__name__)
