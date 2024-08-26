@@ -1,6 +1,8 @@
 # `Equipe C-Shark`
 
-Olá, nós somos a equipe C-Shark e nesse repositório você encontra os códigos e arquivos da solução proposta para a trilha Stone do Desafio BRASA Hacks 2024.
+Olá, nós somos a equipe C-Shark e nesse repositório você encontra os códigos e arquivos da solução proposta para a trilha Stone do Desafio BRASA Hacks 2024. 
+
+Nosso objetivo é implementar uma função visualmente singela e que se insere facilmente na rotina do micro empreendedor. Com a utilização de modelos de machine learning nossa solução define as melhores estratégias para aumentar a frequência de compra dos clientes, assim como incentivá-los a aumentar seu ticket médio, por meio de um contato direto e personalizado.
 
 Dentro da pasta arquivo, se encontra arquivo app.py que inicializa a visualização de nossa solução proposta. Além disso, também se encontram na pasta Arquivos, os arquivos que contém os métodos e funções utilizadas ao longo da solução (tratamento_dados.py e geraGrafico.py). 
 
@@ -12,7 +14,7 @@ Dentro da pasta arquivo, se encontra arquivo app.py que inicializa a visualizaç
 
 As pastas 'static' e 'templates' contém os arquivos necessários para a inicialização do front-end da solução proposta.
 
-Para a implementação da solução foram utilizadas as bibliotecas de Python Scikit-learn, Pandas, Gdown, Matplotlib, e Flask. Também foram utilizadas as tecnologias HTML, CSS e Javascript para a implementação do front-end.
+Para a implementação da solução foram utilizadas as bibliotecas de Python Scikit-learn, Pandas, Gdown, Matplotlib, e Flask. Também foram utilizadas as tecnologias HTML, CSS e Javascript para a operacionalização do front-end.
 
 Link para o vídeo de demonstração da solução: https://youtube.com/shorts/I_6plG9hjm0
 
