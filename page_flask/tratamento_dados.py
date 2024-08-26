@@ -164,8 +164,7 @@ def preve_valor(document_id, client_id):
 
 
 #Função para gerar cupom
-def gera_cupom(document_id, client_id
-):
+def gera_cupom(document_id, client_id):
     df_pred = preve_valor(document_id,client_id)
     df_pred = pd.DataFrame(df_pred)
     #Dia com menor ticket médio = dia para usar cupom
@@ -216,6 +215,7 @@ def gera_cupom(document_id, client_id
     #print(df_predict)
 
     return cupom
+    
     
 
 #print(calcula_total(document_id))
