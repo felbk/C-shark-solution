@@ -217,6 +217,13 @@ def gera_cupom(document_id, client_id):
     return cupom
     
     
+"""
+print(calcula_total(document_id))
+print(trata_dados(document_id,client_id))
+print(preve_valor(document_id,client_id))
+print(gera_cupom(document_id, client_id))
 
-#print(calcula_total(document_id))
-#print(gera_cupom(document_id, client_id))
+cupons = []
+clients= ["8570859491088080896","3937011235745296896","4968104925029793792","4053289940888395776"]
+for client_id in clients:
+    print(gera_cupom(document_id,client_id))"""

@@ -15,9 +15,8 @@ subset = pd.DataFrame(get_subset_empresa(document_id=document_id))
 cupons = {}
 
 
-clients= ["8570859491088080896","3937011235745296896","4968104925029793792","4053289940888395776","5351477533690254336",]
+clients= ["8570859491088080896","3937011235745296896","4968104925029793792","4053289940888395776"]*5
 for client_id in clients:
-    client_id = str(client_id)
     cupons[client_id]=gera_cupom(document_id,client_id)
 print (cupons)
 
