@@ -1,0 +1,153 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+img{
+    width: 100%;
+    
+}
+body {
+    max-width: 650px;
+    margin: auto;
+    background-color: rgba(242,243,245,255);
+    
+}
+.widget {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 92%;
+    margin: auto;
+    background-color: white;
+    border-radius: 4%;
+}
+.widget >p {
+    font-size: large;
+    color:grey;
+    font-weight: 200;
+    margin-left: 6%;
+    padding-top: 20px;
+}
+.widget button  {
+    display: flex;
+    padding: 20px;
+    width:  100%;
+    align-items: start;
+    
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-color: rgba(128, 128, 128, 0.107);
+    background-color: transparent;
+    
+    
+}
+.widget h1,p{
+    font-size: small;
+    text-align: left;
+    padding-left: 5%;
+    width: 90%;
+   
+}
+.widget h1{
+    font-size: medium;
+}
+button section{
+    width: 70%;
+}
+.widget button img {
+    display: inline-block;
+    padding-top: 2px;
+    width: 8%;
+    
+}
+.link{
+    font-size: larger;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #124535;
+    width: 20%;
+    margin:auto;
+    
+}
+
+.popup {
+    font-family: Arial, Helvetica, sans-serif;
+    display: none; /* Inicialmente invisível */
+    position: fixed; /* Fica fixo na tela */
+    left: 0;
+    top: 0;
+    width: 86%;
+    height: 40%;
+    background-color: transparent;
+    align-items: center;
+    border-radius: 20px;
+    margin: 50px 40px 50px 40px;
+    align-self: center;
+    text-align: center;
+    
+}
+
+/* Estilo do conteúdo do pop-up */
+.popup-content {
+    background-color: #f2f3f5;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: #124535;
+}
+
+/* Botão de fechar */
+.close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 36px;
+    font-weight: bold;
+    color: #124535;
+}
+
+.title_fid {
+    width: 100%;
+    color: #124535;
+    border-radius: 10px;
+    margin: 30px 0 0 0;
+    padding-top: 25px;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.desc_fid {
+
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.ativado {
+    font-size: 26px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    vertical-align: middle;
+    color: #f2f3f5;
+    background-color: #124535;
+    border-radius: 15px;
+    height: 70px;
+    padding-top: 20px;
+    width: 87%;
+    position:absolute;
+    bottom:10px; 
+}
+.cupom {
+    text-align: center;
+    font-size:16px;
+    padding: 10px;
+    margin: auto;
+    background-color: rgba(178, 243, 178, 0.295);
+    border-radius: 2%;
+    margin-top: 10px;
+}
