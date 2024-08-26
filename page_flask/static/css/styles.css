@@ -76,7 +76,7 @@ button section{
     left: 0;
     top: 0;
     width: 86%;
-    height: 90%;
+    height: 40%;
     background-color: transparent;
     align-items: center;
     border-radius: 20px;
@@ -140,4 +140,12 @@ button section{
     position:absolute;
     bottom:20px; 
 }
-
+.cupom {
+    text-align: center;
+    font-size:x-large;
+    padding: 10px;
+    margin: auto;
+    background-color: rgba(178, 243, 178, 0.295);
+    border-radius: 2%;
+    margin-top: 10px;
+}

@@ -26,7 +26,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html',numCupons=len(cupons),CupomText=cupons[3]["cupomText"])
 
 @app.route('/processar', methods=['POST'])
 def processar():
